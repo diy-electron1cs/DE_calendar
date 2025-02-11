@@ -7,7 +7,11 @@
     <title>Calendar</title>
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+
+.rotate {
+    /* transform: rotate(180deg); */
+}
 
 html,
 body {
@@ -343,11 +347,11 @@ function getId(id) {
 
 <body>
 
-    <header>
+    <header class="rotate">
         <h1>DE CALENDAR</h1>
     </header>
     <div id="gradient1"></div>
-    <main>
+    <main class="rotate">
         <div class="calendar-wrapper">
             <button id="btnPrev" type="button">предыдущий</button>
             <button id="btnNext" type="button">следующий</button>
