@@ -5,365 +5,377 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calendar</title>
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
 
-.rotate {
-    /* transform: rotate(180deg); */
-}
+        .rotate {
+            /* transform: rotate(180deg); */
+        }
 
-html,
-body {
-    height: 100%;
-}
+        html,
+        body {
+            height: 100%;
+        }
 
-body {
-    font-size: 100%;
-    line-height: 1.5;
-    font-family: sans-serif;
-    background: #484848;
-    color: #444;
-    margin: 0px;
-    font-family: "Balsamiq Sans", serif;
-}
+        body {
+            font-size: 100%;
+            line-height: 1.5;
+            font-family: sans-serif;
+            background: #484848;
+            color: #444;
+            margin: 0px;
+            font-family: "Balsamiq Sans", serif;
+        }
 
-#gradient1 {
-    margin: 0px;
-    height: 100px;
-    background: linear-gradient(#1c1c1c, #484848);
-}
+        #gradient1 {
+            margin: 0px;
+            height: 100px;
+            background: linear-gradient(#1c1c1c, #484848);
+        }
 
-#gradient2 {
-    margin: 0px;
-    height: 300px;
-    background: linear-gradient(#484848, #1c1c1c);
-}
+        #gradient2 {
+            margin: 0px;
+            height: 300px;
+            background: linear-gradient(#484848, #1c1c1c);
+        }
 
-header{
-    color: #79a498;
-    background-color: #1c1c1c;
-    margin: 0px;
-}
+        header {
+            color: #79a498;
+            background-color: #1c1c1c;
+            margin: 0px;
+        }
 
-h1{
-    margin: 0px;
-    text-align: center;
-    font-family: "Amatic SC", serif;
-    font-size: 50px;
-}
+        h1 {
+            margin: 0px;
+            text-align: center;
+            font-family: "Amatic SC", serif;
+            font-size: 50px;
+        }
 
-footer{
-    height: 90px;
-    background-color: #1c1c1c;
-}
+        footer {
+            height: 90px;
+            background-color: #1c1c1c;
+        }
 
-.footer{
-    color: #a4a4a4;
-    text-align: center;
-    margin: 0px;
-}
+        .footer {
+            color: #a4a4a4;
+            text-align: center;
+            margin: 0px;
+        }
 
-*,
-*:before,
-*:after {
-    box-sizing: border-box;
-}
+        *,
+        *:before,
+        *:after {
+            box-sizing: border-box;
+        }
 
-.group:after {
-    content: "";
-    display: table;
-    clear: both;
-}
+        .group:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
 
-img {
-    max-width: 100%;
-    height: auto;
-    vertical-align: baseline;
-}
+        img {
+            max-width: 100%;
+            height: auto;
+            vertical-align: baseline;
+        }
 
-a {
-    text-decoration: none;
-}
+        a {
+            text-decoration: none;
+        }
 
-.calendar-wrapper {
-    margin-left: auto;
-    margin-right: auto;
-    width: 360px;
-    /*margin-left: 15px;
+        .calendar-wrapper {
+            margin-left: auto;
+            margin-right: auto;
+            width: 360px;
+            /*margin-left: 15px;
     margin-right: 15px;*/
-    padding: 10px;
-    border: 1px solid #dcdcff;
-    border-radius: 30px;
-    background: #e4f1ef;
-}
-
-table {
-    clear: both;
-    width: 100%;
-    border: 2px solid #e3e3e3;
-    border-radius: 3px;
-    border-collapse: collapse;
-    color: #444;
-}
-
-td {
-    height: 48px;
-    text-align: center;
-    vertical-align: middle;
-    border-right: 1px solid #e3e3e3;
-    border-top: 1px solid #e3e3e3;
-    width: 14.28571429%;
-}
-
-td.not-current {
-    color: #c0c0c0;
-}
-
-td.today {
-    font-weight: 700;
-    color: #000000;
-    background-color: #90d9c0;
-    font-size: 1.5em;
-}
-
-thead td {
-    border: none;
-    color: #28283b;
-    background-color: #d6d6d6;
-    text-transform: uppercase;
-    font-size: 1.5em;
-}
-
-#btnPrev {
-    float: left;
-    margin-bottom: 20px;
-}
-
-#btnPrev:before {
-    content: '<';
-    font-family: FontAwesome;
-    padding-right: 4px;
-}
-
-#btnNext {
-    float: right;
-    margin-bottom: 20px;
-}
-
-#btnNext:after {
-    content: '>';
-    font-family: FontAwesome;
-    padding-left: 4px;
-}
-
-#btnPrev,
-#btnNext {
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1em;
-    color: #c0c0c0;
-    cursor: pointer;
-    font-family: sans-serif;
-    text-transform: uppercase;
-    /* transition: all 0.3s ease; */
-    font-size: 15px;
-}
-
-#btnPrev:hover,
-#btnNext:hover {
-    /* opacity: 0.5; */
-    color: #000000;
-    transition: 800ms;
-}
-</style>
-
-
-    
-    <script>
-    var Cal = function (divId) {
-
-    //Сохраняем идентификатор div
-    this.divId = divId;
-
-    // Дни недели с понедельника
-    this.DaysOfWeek = [
-        'Пн',
-        'Вт',
-        'Ср',
-        'Чт',
-        'Пт',
-        'Сб',
-        'Вс'
-    ];
-
-    // Месяцы начиная с января
-    this.Months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-
-    //Устанавливаем текущий месяц, год
-    var d = new Date();
-
-    this.currMonth = d.getMonth('1');
-    this.currYear = d.getFullYear('25');
-    this.currDay = d.getDate('31');
-};
-
-// Переход к следующему месяцу
-Cal.prototype.nextMonth = function () {
-    if (this.currMonth == 11) {
-        this.currMonth = 0;
-        this.currYear = this.currYear + 1;
-    }
-    else {
-        this.currMonth = this.currMonth + 1;
-    }
-    this.showcurr();
-};
-
-// Переход к предыдущему месяцу
-Cal.prototype.previousMonth = function () {
-    if (this.currMonth == 0) {
-        this.currMonth = 11;
-        this.currYear = this.currYear - 1;
-    }
-    else {
-        this.currMonth = this.currMonth - 1;
-    }
-    this.showcurr();
-};
-
-// Показать текущий месяц
-Cal.prototype.showcurr = function () {
-    this.showMonth(this.currYear, this.currMonth);
-};
-
-
-
-// Показать месяц (год, месяц)
-Cal.prototype.showMonth = function (y, m) {
-
-    var d = new Date()
-        // Первый день недели в выбранном месяце 
-        , firstDayOfMonth = new Date(y, m, 7).getDay()
-        // Последний день выбранного месяца
-        , lastDateOfMonth = new Date(y, m + 1, 0).getDate()
-        // Последний день предыдущего месяца
-        , lastDayOfLastMonth = m == 0 ? new Date(y - 1, 11, 0).getDate() : new Date(y, m, 0).getDate();
-
-
-    var html = '<table>';
-
-    // Запись выбранного месяца и года
-    html += '<thead><tr>';
-    html += '<td colspan="7">' + this.Months[m] + ' ' + y + '</td>';
-    html += '</tr></thead>';
-
-
-    // заголовок дней недели
-    html += '<tr class="days">';
-    for (var i = 0; i < this.DaysOfWeek.length; i++) {
-        html += '<td>' + this.DaysOfWeek[i] + '</td>';
-    }
-    html += '</tr>';
-
-    // Записываем дни
-    var i = 1;
-    do {
-
-        var dow = new Date(y, m, i).getDay();
-
-        // Начать новую строку в понедельник
-        if (dow == 1) {
-            html += '<tr>';
+            padding: 10px;
+            border: 1px solid #dcdcff;
+            border-radius: 30px;
+            background: #e4f1ef;
         }
 
-        // Если первый день недели не понедельник показать последние дни предидущего месяца
-        else if (i == 1) {
-            html += '<tr>';
-            var k = lastDayOfLastMonth - firstDayOfMonth + 1;
-            for (var j = 0; j < firstDayOfMonth; j++) {
-                html += '<td class="not-current">' + k + '</td>';
-                k++;
-            }
+        table {
+            clear: both;
+            width: 100%;
+            border: 2px solid #e3e3e3;
+            border-radius: 3px;
+            border-collapse: collapse;
+            color: #444;
         }
 
-        // Записываем текущий день в цикл
-        var chk = new Date();
-        var chkY = chk.getFullYear();
-        var chkM = chk.getMonth();
-        if (chkY == this.currYear && chkM == this.currMonth && i == this.currDay) {
-            html += '<td class="today">' + i + '</td>';
-        } else {
-            html += '<td class="normal">' + i + '</td>';
-        }
-        // закрыть строку в воскресенье
-        if (dow == 0) {
-            html += '</tr>';
-        }
-        // Если последний день месяца не воскресенье, показать первые дни следующего месяца
-        else if (i == lastDateOfMonth) {
-            var k = 1;
-            for (dow; dow < 7; dow++) {
-                html += '<td class="not-current">' + k + '</td>';
-                k++;
-            }
+        td {
+            height: 48px;
+            text-align: center;
+            vertical-align: middle;
+            border-right: 1px solid #e3e3e3;
+            border-top: 1px solid #e3e3e3;
+            width: 14.28571429%;
         }
 
-        i++;
-    } while (i <= lastDateOfMonth);
+        td.not-current {
+            color: #c0c0c0;
+        }
 
-    // Конец таблицы
-    html += '</table>';
+        td.today {
+            font-weight: 700;
+            color: #000000;
+            background-color: #90d9c0;
+            font-size: 1.5em;
+        }
 
-    // Записываем HTML в div
-    document.getElementById(this.divId).innerHTML = html;
-};
+        thead td {
+            border: none;
+            color: #28283b;
+            background-color: #d6d6d6;
+            text-transform: uppercase;
+            font-size: 1.5em;
+        }
 
-// При загрузке окна
-window.onload = function () {
+        #btnPrev {
+            float: left;
+            margin-bottom: 20px;
+        }
 
-    // Начать календарь
-    var c = new Cal("divCal");
-    c.showcurr();
+        #btnPrev:before {
+            content: '<';
+            font-family: FontAwesome;
+            padding-right: 4px;
+        }
 
-    // Привязываем кнопки «Следующий» и «Предыдущий»
-    getId('btnNext').onclick = function () {
-        c.nextMonth();
-    };
-    getId('btnPrev').onclick = function () {
-        c.previousMonth();
-    };
-}
+        #btnNext {
+            float: right;
+            margin-bottom: 20px;
+        }
 
-// Получить элемент по id
-function getId(id) {
-    return document.getElementById(id);
-}
-    </script>
+        #btnNext:after {
+            content: '>';
+            font-family: FontAwesome;
+            padding-left: 4px;
+        }
 
-    
+        #btnPrev,
+        #btnNext {
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 1em;
+            color: #c0c0c0;
+            cursor: pointer;
+            font-family: sans-serif;
+            text-transform: uppercase;
+            /* transition: all 0.3s ease; */
+            font-size: 15px;
+        }
+
+        #btnPrev:hover,
+        #btnNext:hover {
+            /* opacity: 0.5; */
+            color: #000000;
+            transition: 800ms;
+        }
+    </style>
 </head>
 
 <body>
 
-    <header class="rotate">
+    <header id="rotate1">
         <h1>DE CALENDAR</h1>
     </header>
     <div id="gradient1"></div>
-    <main class="rotate">
+    <main id="rotate2">
         <div class="calendar-wrapper">
             <button id="btnPrev" type="button">предыдущий</button>
             <button id="btnNext" type="button">следующий</button>
             <div id="divCal"></div>
         </div>
-        
+
     </main>
     <div id="gradient2"></div>
     <footer>
         <p class="footer">DE</p>
     </footer>
 
-</body>
+    <script>
 
+        var Cal = function (divId) {
+
+            //Сохраняем идентификатор div
+            this.divId = divId;
+
+            // Дни недели с понедельника
+            this.DaysOfWeek = [
+                'Пн',
+                'Вт',
+                'Ср',
+                'Чт',
+                'Пт',
+                'Сб',
+                'Вс'
+            ];
+
+            // Месяцы начиная с января
+            this.Months = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+            //Устанавливаем текущий месяц, год
+            var d = new Date();
+
+            this.currMonth = d.getMonth('1');
+            this.currYear = d.getFullYear('25');
+            this.currDay = d.getDate('31');
+        };
+
+        // Переход к следующему месяцу
+        Cal.prototype.nextMonth = function () {
+            if (this.currMonth == 11) {
+                this.currMonth = 0;
+                this.currYear = this.currYear + 1;
+            }
+            else {
+                this.currMonth = this.currMonth + 1;
+            }
+            this.showcurr();
+        };
+
+        // Переход к предыдущему месяцу
+        Cal.prototype.previousMonth = function () {
+            if (this.currMonth == 0) {
+                this.currMonth = 11;
+                this.currYear = this.currYear - 1;
+            }
+            else {
+                this.currMonth = this.currMonth - 1;
+            }
+            this.showcurr();
+        };
+
+        // Показать текущий месяц
+        Cal.prototype.showcurr = function () {
+            this.showMonth(this.currYear, this.currMonth);
+        };
+
+
+
+        // Показать месяц (год, месяц)
+        Cal.prototype.showMonth = function (y, m) {
+
+            var d = new Date()
+                // Первый день недели в выбранном месяце 
+                , firstDayOfMonth = new Date(y, m, 7).getDay()
+                // Последний день выбранного месяца
+                , lastDateOfMonth = new Date(y, m + 1, 0).getDate()
+                // Последний день предыдущего месяца
+                , lastDayOfLastMonth = m == 0 ? new Date(y - 1, 11, 0).getDate() : new Date(y, m, 0).getDate();
+
+
+            var html = '<table>';
+
+            // Запись выбранного месяца и года
+            html += '<thead><tr>';
+            html += '<td colspan="7">' + this.Months[m] + ' ' + y + '</td>';
+            html += '</tr></thead>';
+
+
+            // заголовок дней недели
+            html += '<tr class="days">';
+            for (var i = 0; i < this.DaysOfWeek.length; i++) {
+                html += '<td>' + this.DaysOfWeek[i] + '</td>';
+            }
+            html += '</tr>';
+
+            // Записываем дни
+            var i = 1;
+            do {
+
+                var dow = new Date(y, m, i).getDay();
+
+                // Начать новую строку в понедельник
+                if (dow == 1) {
+                    html += '<tr>';
+                }
+
+                // Если первый день недели не понедельник показать последние дни предидущего месяца
+                else if (i == 1) {
+                    html += '<tr>';
+                    var k = lastDayOfLastMonth - firstDayOfMonth + 1;
+                    for (var j = 0; j < firstDayOfMonth; j++) {
+                        html += '<td class="not-current">' + k + '</td>';
+                        k++;
+                    }
+                }
+
+                // Записываем текущий день в цикл
+                var chk = new Date();
+                var chkY = chk.getFullYear();
+                var chkM = chk.getMonth();
+                if (chkY == this.currYear && chkM == this.currMonth && i == this.currDay) {
+                    html += '<td class="today">' + i + '</td>';
+                } else {
+                    html += '<td class="normal">' + i + '</td>';
+                }
+                // закрыть строку в воскресенье
+                if (dow == 0) {
+                    html += '</tr>';
+                }
+                // Если последний день месяца не воскресенье, показать первые дни следующего месяца
+                else if (i == lastDateOfMonth) {
+                    var k = 1;
+                    for (dow; dow < 7; dow++) {
+                        html += '<td class="not-current">' + k + '</td>';
+                        k++;
+                    }
+                }
+
+                i++;
+            } while (i <= lastDateOfMonth);
+
+            // Конец таблицы
+            html += '</table>';
+
+            // Записываем HTML в div
+            document.getElementById(this.divId).innerHTML = html;
+        };
+
+        // При загрузке окна
+        window.onload = function () {
+
+            // Начать календарь
+            var c = new Cal("divCal");
+            c.showcurr();
+
+            // Привязываем кнопки «Следующий» и «Предыдущий»
+            getId('btnNext').onclick = function () {
+                c.nextMonth();
+            };
+            getId('btnPrev').onclick = function () {
+                c.previousMonth();
+            };
+        }
+
+        // Получить элемент по id
+        function getId(id) {
+            return document.getElementById(id);
+        }
+
+
+        const today = new Date();
+        const day = today.getDate();
+        const month = today.getMonth() + 1;
+
+        let elem1 = document.getElementById('rotate1');
+        let elem2 = document.getElementById('rotate2');
+
+        if (day === 3 && month === 9) {
+            elem1.style.setProperty('transform', 'rotate(180deg)');
+            elem2.style.setProperty('transform', 'rotate(180deg)');
+        } else {
+            elem1.style.setProperty('transform', 'rotate(0deg)');
+            elem2.style.setProperty('transform', 'rotate(0deg)');
+        }
+    </script>
+
+</body>
 </html>
