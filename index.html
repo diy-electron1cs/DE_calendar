@@ -11,10 +11,14 @@
 
         .rotate {
             /* transform: rotate(180deg); */
+            padding-left: 10px;
+            padding-right: 10px;
         }
 
         html,
         body {
+            margin: 0;
+            padding: 0;
             height: 100%;
         }
 
@@ -177,15 +181,32 @@
             color: #000000;
             transition: 800ms;
         }
+
+        .day_image img {
+            /*z-index: 2;*/
+            position: fixed;
+            width: 50px;
+            height: 50px;
+            top: 0;
+            right: 0;
+            margin: 10px;
+            /* отступ от края окна */
+            z-index: 1000;
+            /* чтобы быть поверх других элементов */
+        }
     </style>
 </head>
 
-<body>
-
-    <header id="rotate1">
+<body class="background-set">
+    <header id="rotate1" class="back-img">
         <h1>DE CALENDAR</h1>
     </header>
-    <div id="gradient1"></div>
+
+    <div class="day_image">
+        <!-- Картинка вставляется сюда через JS -->
+    </div>
+
+    <div id="gradient1" class="back-img"></div>
     <main id="rotate2">
         <div class="calendar-wrapper">
             <button id="btnPrev" type="button">предыдущий</button>
@@ -194,10 +215,15 @@
         </div>
 
     </main>
-    <div id="gradient2"></div>
-    <footer>
+
+
+    <div id="gradient2" class="back-img"></div>
+    <footer class="back-img">
         <p class="footer">DE</p>
     </footer>
+
+
+
 
     <script>
 
@@ -361,21 +387,136 @@
         }
 
 
+        const container = document.querySelector('.day_image');
+
+        function addImage(position = 'right-top', src, width, vertical, horizontal) {
+            // Удаляем старую картинку, если есть
+            const oldImg = container.querySelector('img');
+            if (oldImg) oldImg.remove();
+
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = 'Day Image';
+
+            if (position === 'right-top') {
+                img.style.width = width;
+                img.style.height = 'auto';
+                img.style.top = vertical;
+                img.style.right = horizontal;
+                img.style.bottom = '';
+                img.style.left = '';
+            } else if (position === 'left-top') {
+                img.style.width = width;
+                img.style.height = 'auto';
+                img.style.top = vertical;
+                img.style.right = '';
+                img.style.bottom = '10px';
+                img.style.left = horizontal;
+            }
+
+            container.appendChild(img);
+        }
+
+        function removeImage() {
+            const img = container.querySelector('img');
+            if (img) img.remove();
+        }
+
+
+        function setResponsiveBackground(imageUrl) {
+            const elements = document.querySelectorAll('.back-img');
+
+            elements.forEach(el => {
+                el.style.setProperty('background', 'none', 'important');
+                el.style.setProperty('background-color', 'transparent', 'important');
+            });
+
+            document.body.style.backgroundImage = `url('${imageUrl}')`;
+            document.body.style.backgroundSize = "cover";       // чтобы картинка растягивалась по всей странице
+            document.body.style.backgroundRepeat = "no-repeat";  // чтобы картинка не повторялась
+            document.body.style.backgroundPosition = "center center"; // выравнивание по центру
+
+        }
+
+        function isProgrammersDay(day, month, year) {
+            const programmersDate = new Date(year, 0, 256);
+            return day === programmersDate.getDate() && (month - 1) === programmersDate.getMonth() && year === programmersDate.getFullYear();
+        }
+
         const today = new Date();
         const day = today.getDate();
         const month = today.getMonth() + 1;
 
-        let elem1 = document.getElementById('rotate1');
-        let elem2 = document.getElementById('rotate2');
 
-        if (day === 3 && month === 9) {
+        if ((day === 31 && month === 12) || (day <= 8 && month === 1)) {
+            //новогодние праздники, с 31.12 по 08.01
+            addImage('left-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/new-year.png?raw=true', '300px', '0px', '0px');
+        }
+        else if (day === 23 && month === 2) {
+            //день защитника отечества, 23.02
+            addImage('left-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/23-feb.png?raw=true', '220px', '0px', '0px');
+        }
+        else if (day === 8 && month === 3) {
+            //междунароный женский день, 08.03
+            addImage('right-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/8-mar.png?raw=true', '220px', '30px', '0px');
+        }
+        else if (day === 12 && month === 4) {
+            //день космонавтики, 12.04
+            addImage('right-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/12-apr.png?raw=true', '250px', '0px', '0px');
+        }
+        else if (day === 1 && month === 5) {
+            //день весны и труда, 01.05
+            addImage('right-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/1-may.png?raw=true', '100px', '0px', '0px');
+        }
+        else if (day === 7 && month === 5) {
+            //день радио, 07.05
+            addImage('left-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/7-may.png?raw=true', '200px', '0px', '0px');
+        }
+        else if (day === 9 && month === 5) {
+            //день победы, 09.05
+            addImage('left-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/9-may-2025.png?raw=true', '100px', '0px', '0px');
+            //addImage('left-top', 'images/9-may.png', '200px', '0px', '0px');
+        }
+        else if (day === 12 && month === 6) {
+            //день России, 12.06
+            setResponsiveBackground('https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/russian-flag.jfif?raw=true');
+        }
+        else if (day === 3 && month === 9) {
+            //3-е сентября!
+            let elem1 = document.getElementById('rotate1');
+            let elem2 = document.getElementById('rotate2');
             elem1.style.setProperty('transform', 'rotate(180deg)');
             elem2.style.setProperty('transform', 'rotate(180deg)');
-        } else {
-            elem1.style.setProperty('transform', 'rotate(0deg)');
-            elem2.style.setProperty('transform', 'rotate(0deg)');
+        }
+        else if (day === 4 && month === 11) {
+            //день народного единства, 04.11
+            addImage('right-top', 'images/4-now.png', '200px', '10px', '0px');
+        }
+
+
+        if (day <= 5 && month === 9) {
+            //осень
+            setResponsiveBackground('https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/autumn.png?raw=true');
+        }
+        else if (day <= 5 && month === 12) {
+            //зима
+            setResponsiveBackground('https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/winter.png?raw=true');
+        }
+        else if (day <= 5 && month === 3) {
+            //весна
+            setResponsiveBackground('https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/spring.png?raw=true');
+        }
+        else if (day <= 5 && month === 6) {
+            //лето
+            setResponsiveBackground('https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/summer.png?raw=true');
+        }
+
+        if (isProgrammersDay(day, month, year) === true) {
+            //день программиста, 256 посчёту
+            setResponsiveBackground('https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/matrix.png?raw=true');
         }
     </script>
 
 </body>
+
 </html>
