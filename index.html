@@ -9,24 +9,6 @@
         @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
 
-
-
-
-
-.calendar-wrapper {
-    margin-left: 15;
-    margin-right: 15;
-    width: 360px;
-    padding: 10px;
-    border: 1px solid #dcdcff;
-    border-radius: 30px;
-    background: #e4f1ef;
-}
-
-
-
-
-
         .rotate {
             /* transform: rotate(180deg); */
             padding-left: 10px;
@@ -109,9 +91,10 @@
         }
 
         .calendar-wrapper {
+            /* align-items: center; */
             margin-left: auto;
             margin-right: auto;
-            width: 360px;
+            width: 320px;
             /*margin-left: 15px;
     margin-right: 15px;*/
             padding: 10px;
@@ -212,6 +195,10 @@
             z-index: 1000;
             /* чтобы быть поверх других элементов */
         }
+
+        #meteo {
+            margin-top: 20px;
+        }
     </style>
 </head>
 
@@ -234,6 +221,17 @@
 
     </main>
 
+    <!-- Code Weather Forecast rusmeteo.net  -->
+    <div id="meteo">
+        <link href="https://api.rusmeteo.net/service/informers/css/widget-3d.min.css" rel="stylesheet" type="text/css">
+        <a href="https://rusmeteo.net/weather/moskva/" class="rus-widget-catamaran"
+            id="008fb6b5a12cf492bc70816f7cfd531a"
+            style="width:318px;height:50px;background-color:rgb(0, 114, 181);color:rgb(250, 250, 250)">Погода в
+            Москве</a>
+        <script async src="https://rusmeteo.net/api/informerV2/008fb6b5a12cf492bc70816f7cfd531a/"
+            type="text/javascript"></script>
+        <!-- End Code Weather Forecast rusmeteo.net -->
+    </div>
 
     <div id="gradient2" class="back-img"></div>
     <footer class="back-img">
@@ -407,7 +405,7 @@
 
         const container = document.querySelector('.day_image');
 
-        function addImage(position = 'right-top', src, width, vertical, horizontal) {
+        function addImage(position = 'right-top', src, width, vertical = 'auto', horizontal = 'auto') {
             // Удаляем старую картинку, если есть
             const oldImg = container.querySelector('img');
             if (oldImg) oldImg.remove();
@@ -415,23 +413,31 @@
             const img = document.createElement('img');
             img.src = src;
             img.alt = 'Day Image';
+            img.style.position = 'absolute';
+            img.style.width = width;
+            img.style.height = 'auto';
 
             if (position === 'right-top') {
-                img.style.width = width;
-                img.style.height = 'auto';
                 img.style.top = vertical;
                 img.style.right = horizontal;
                 img.style.bottom = '';
                 img.style.left = '';
+                img.style.transform = '';
             } else if (position === 'left-top') {
-                img.style.width = width;
-                img.style.height = 'auto';
                 img.style.top = vertical;
                 img.style.right = '';
                 img.style.bottom = '10px';
                 img.style.left = horizontal;
+                img.style.transform = '';
+            } else if (position === 'center-top') {
+                img.style.top = vertical;
+                img.style.left = '50%';          // по центру по горизонтали
+                img.style.right = '';
+                img.style.bottom = '';
+                img.style.transform = 'translateX(-50%)'; // сдвигаем на половину ширины влево для центрирования
             }
 
+            container.style.position = 'relative'; // чтобы абсолютное позиционирование работало внутри контейнера
             container.appendChild(img);
         }
 
@@ -453,7 +459,6 @@
             document.body.style.backgroundSize = "cover";       // чтобы картинка растягивалась по всей странице
             document.body.style.backgroundRepeat = "no-repeat";  // чтобы картинка не повторялась
             document.body.style.backgroundPosition = "center center"; // выравнивание по центру
-
         }
 
         function isProgrammersDay(day, month, year) {
@@ -468,19 +473,19 @@
 
         if ((day === 31 && month === 12) || (day <= 8 && month === 1)) {
             //новогодние праздники, с 31.12 по 08.01
-            addImage('left-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/new-year.png?raw=true', '300px', '0px', '0px');
+            addImage('left-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/new-year.png?raw=true', '150px', '-80px', '0px');
         }
         else if (day === 23 && month === 2) {
             //день защитника отечества, 23.02
-            addImage('left-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/23-feb.png?raw=true', '220px', '0px', '0px');
+            addImage('center-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/23-feb.png?raw=true', '100px', '0px', '0px');
         }
         else if (day === 8 && month === 3) {
             //междунароный женский день, 08.03
-            addImage('right-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/8-mar.png?raw=true', '220px', '30px', '0px');
+            addImage('center-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/8-mar.png?raw=true', '200px', '-20px', '0px');
         }
         else if (day === 12 && month === 4) {
             //день космонавтики, 12.04
-            addImage('right-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/12-apr.png?raw=true', '250px', '0px', '0px');
+            addImage('center-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/12-apr.png?raw=true', '150px', '-20px', '0px');
         }
         else if (day === 1 && month === 5) {
             //день весны и труда, 01.05
@@ -488,12 +493,13 @@
         }
         else if (day === 7 && month === 5) {
             //день радио, 07.05
-            addImage('left-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/7-may.png?raw=true', '200px', '0px', '0px');
+            addImage('center-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/7-may.png?raw=true', '120px', '-10px', '0px');
         }
         else if (day === 9 && month === 5) {
             //день победы, 09.05
-            addImage('left-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/9-may-2025.png?raw=true', '100px', '0px', '0px');
-            //addImage('left-top', 'images/9-may.png', '200px', '0px', '0px');
+            addImage('right-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/9-may-2025.png?raw=true', '100px', '-80px', '-10px');
+            //addImage('center-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/9-may.png?raw=true', '170px', '-30px', '0px');
+
         }
         else if (day === 12 && month === 6) {
             //день России, 12.06
@@ -508,17 +514,10 @@
         }
         else if (day === 4 && month === 11) {
             //день народного единства, 04.11
-            addImage('right-top', 'images/4-now.png', '200px', '10px', '0px');
+            addImage('center-top', 'https://github.com/DIY-Elecron1cs/DE_calendar/blob/main/images/4-now.png?raw=true', '150px', '-15px', '0px');
         }
 
-
-
-
-
-
-
-
-
+    
 
         if (day <= 5 && month === 9) {
             //осень
