@@ -196,8 +196,20 @@
             /* чтобы быть поверх других элементов */
         }
 
+        .back-img {
+            background-attachment: fixed;
+        }
+
         #meteo {
-            margin-top: 20px;
+            margin-top: 50px;
+            text-align: center;
+        }
+
+
+        #clock {
+            background-color: #1c1c1c;
+            text-align: center;
+            text-overflow: ellipsis;
         }
     </style>
 </head>
@@ -205,6 +217,8 @@
 <body class="background-set">
     <header id="rotate1" class="back-img">
         <h1>DE CALENDAR</h1>
+        <div id="clock" class="back-img">00:00:00</div>
+
     </header>
 
     <div class="day_image">
@@ -212,6 +226,7 @@
     </div>
 
     <div id="gradient1" class="back-img"></div>
+
     <main id="rotate2">
         <div class="calendar-wrapper">
             <button id="btnPrev" type="button">предыдущий</button>
@@ -221,17 +236,15 @@
 
     </main>
 
-    <!-- Code Weather Forecast rusmeteo.net  -->
     <div id="meteo">
-        <link href="https://api.rusmeteo.net/service/informers/css/widget-3d.min.css" rel="stylesheet" type="text/css">
-        <a href="https://rusmeteo.net/weather/moskva/" class="rus-widget-catamaran"
-            id="008fb6b5a12cf492bc70816f7cfd531a"
-            style="width:318px;height:50px;background-color:rgb(0, 114, 181);color:rgb(250, 250, 250)">Погода в
-            Москве</a>
-        <script async src="https://rusmeteo.net/api/informerV2/008fb6b5a12cf492bc70816f7cfd531a/"
-            type="text/javascript"></script>
-        <!-- End Code Weather Forecast rusmeteo.net -->
+        <div id="ww_308ae36aa1ab8" v='1.3' loc='auto'
+            a='{"t":"horizontal","lang":"ru","ids":[],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"#FFFFFF00","cl_font":"#FFFFFF","cl_cloud":"#d4d4d4","cl_persp":"#2196F3","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>
+            Больше прогнозов: <a href="https://oneweather.org/tr/istanbul/15_days/" id="ww_308ae36aa1ab8_u"
+                target="_blank" style="display: none;">İstanbul 15 günlük hava durumu</a>
+        </div>
     </div>
+
+    <script async src="https://app3.weatherwidget.org/js/?id=ww_308ae36aa1ab8"></script>
 
     <div id="gradient2" class="back-img"></div>
     <footer class="back-img">
@@ -242,6 +255,20 @@
 
 
     <script>
+
+        function updateClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${h}:${m}:${s}`;
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+
+
+
 
         var Cal = function (divId) {
 
@@ -471,6 +498,56 @@
         const month = today.getMonth() + 1;
 
 
+        if (month === 12) {
+            //декабрь
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/winter-1.jpg?raw=true');
+        }
+        else if (month === 1) {
+            //январь
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/winter-2.jpg?raw=true');
+        }
+        else if (month === 2) {
+            //февраль
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/winter-3.gpg?raw=true');
+        }
+        else if (month === 3) {
+            //март
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/spring-1.jpg?raw=true');
+        }
+        else if (month === 4) {
+            //апрель
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/spring-2.jpg?raw=true');
+        }
+        else if (month === 5) {
+            //май
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/spring-3.jpg?raw=true');
+        }
+        else if (month === 6) {
+            //июнь
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/summer-1.jpg?raw=true');
+        }
+        else if (month === 7) {
+            //июль
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/summer-2.jpg?raw=true');
+        }
+        else if (month === 8) {
+            //август
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/summer-3.jpg?raw=true');
+        }
+        else if (month === 9) {
+            //сентябрь
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn-1.jpg?raw=true');
+        }
+        else if (month === 10) {
+            //октябрь
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn-1.jpg?raw=true');
+        }
+        else if (month === 11) {
+            //ноябрь
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn-1.jpg?raw=true');
+        }
+
+
         if ((day === 31 && month === 12) || (day <= 8 && month === 1)) {
             //новогодние праздники, с 31.12 по 08.01
             addImage('left-top', 'https://github.com/diy-electron1cs/DE_calendar/blob/main/images/new-year.png?raw=true', '150px', '-80px', '0px');
@@ -517,24 +594,6 @@
             addImage('center-top', 'https://github.com/diy-electron1cs/DE_calendar/blob/main/images/4-now.png?raw=true', '150px', '-15px', '0px');
         }
 
-    
-
-        if (day <= 5 && month === 9) {
-            //осень
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn.png?raw=true');
-        }
-        else if (day <= 5 && month === 12) {
-            //зима
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/winter.png?raw=true');
-        }
-        else if (day <= 5 && month === 3) {
-            //весна
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/spring.png?raw=true');
-        }
-        else if (day <= 5 && month === 6) {
-            //лето
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/summer.png?raw=true');
-        }
 
         if (isProgrammersDay(day, month, year) === true) {
             //день программиста, 256 посчёту
