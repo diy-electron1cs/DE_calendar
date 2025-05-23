@@ -56,7 +56,8 @@
             margin: 0px;
             text-align: center;
             font-family: "Amatic SC", serif;
-            font-size: 50px;
+            font-family: "Balsamiq Sans", serif;
+            font-size: 40px;
         }
 
         footer {
@@ -219,6 +220,22 @@
         #weather-widget {
             max-width: 320px;
         }
+
+        #save-coords-btn{
+            font-family: "Balsamiq Sans", serif;
+            border-radius: 10px;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+
+        .reboot {
+            text-align: center;
+        }
+
+        .koord-inp{
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -244,67 +261,123 @@
 
     </main>
 
-    <div id="meteo">
-        <!--
+    <!--
         <div data-meteomatics-weather-widget="horizontal" data-meteomatics-weather-widget-color="primary"
-            data-meteomatics-weather-widget-title="Krasnodar"
-            data-meteomatics-weather-widget-latitude="47.420153" data-meteomatics-weather-widget-longitude="9.367273"
+            data-meteomatics-weather-widget-title="Weather" data-meteomatics-weather-widget-latitude="45.02"
+            data-meteomatics-weather-widget-longitude="38.59"
             data-meteomatics-weather-widget-measurement-unit-temperature="celsius">
             <a href="https://www.meteomatics.com">Meteomatics Weather Widget</a>
         </div>
 
-
-        <link rel="stylesheet" href="https://widget.meteomatics.com/v2/meteomatics-weather-widget.css" />
+        <link rel="stylesheet" href="https://widget.meteomatics.com/v2/meteomatics-weather-widget.css"/>
         <script async src="https://widget.meteomatics.com/v2/meteomatics-weather-widget.js"></script>
     -->
 
-<!--
+
+
+    <div id="meteo">
         <div id="weather-widget" data-meteomatics-weather-widget="horizontal"
-            data-meteomatics-weather-widget-color="primary" data-meteomatics-weather-widget-title="Your Location"
+            data-meteomatics-weather-widget-color="primary" data-meteomatics-weather-widget-title="Weather"
+            data-meteomatics-weather-widget-latitude="0" data-meteomatics-weather-widget-longitude="0"
             data-meteomatics-weather-widget-measurement-unit-temperature="celsius">
-            <a href="https://www.meteomatics.com">Meteomatics Weather Widget</a>
+            <a href="https://www.meteomatics.com" class="reboot">Meteomatics Weather Widget</a>
         </div>
 
         <link rel="stylesheet" href="https://widget.meteomatics.com/v2/meteomatics-weather-widget.css" />
         <script async src="https://widget.meteomatics.com/v2/meteomatics-weather-widget.js"></script>
-
-        <script>
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function (position) {
-                    const lat = position.coords.latitude;
-                    const lon = position.coords.longitude;
-
-                    // Найдём див с виджетом
-                    const widget = document.getElementById('weather-widget');
-
-                    // Установим атрибуты широты и долготы
-                    widget.setAttribute('data-meteomatics-weather-widget-latitude', lat);
-                    widget.setAttribute('data-meteomatics-weather-widget-longitude', lon);
-
-
-                    widget.setAttribute('data-meteomatics-weather-widget-title', 'Weather');
-
-                    widget.innerHTML = '<a href="https://www.meteomatics.com">Meteomatics Weather Widget</a>';
-
-                    if (window.MeteomaticsWeatherWidget) {
-                        window.MeteomaticsWeatherWidget.init();
-                    }
-                }, function (error) {
-                    console.error('Ошибка определения геолокации', error);
-                });
-            } else {
-                console.log('Геолокация не поддерживается вашим браузером');
-            }
-        </script>
--->
-
-
-
-
-
     </div>
 
-    <script async src="https://app3.weatherwidget.org/js/?id=ww_308ae36aa1ab8"></script>
+    <div class="input-section" style="margin-top:10px;">
+        <div class="reboot">
+            <button id="save-coords-btn" style="margin-top:5px;" refresh-btn id="refresh-btn">Установить
+                координаты</button>
+        </div>
+
+        <div class="reboot">
+            <label><input class="koord-inp" ype="number" id="latitude-input" step="0.00001"
+                    placeholder="Например, 45.0355"></label><br>
+            <label><input class="koord-inp" type="number" id="longitude-input" step="0.00001"
+                    placeholder="Например, 38.9753"></label><br>
+        </div>
+    </div>
+
+    <script>
+        const widget = document.getElementById('weather-widget');
+        const saveBtn = document.getElementById('save-coords-btn');
+        const latInput = document.getElementById('latitude-input');
+        const lonInput = document.getElementById('longitude-input');
+
+        function updateWidget(lat, lon) {
+            widget.innerHTML = '<a href="https://www.meteomatics.com">Meteomatics Weather Widget</a>';
+            widget.setAttribute('data-meteomatics-weather-widget-latitude', lat);
+            widget.setAttribute('data-meteomatics-weather-widget-longitude', lon);
+
+            setTimeout(() => {
+                if (window.MeteomaticsWeatherWidget) {
+                    window.MeteomaticsWeatherWidget.initWidgets();
+                }
+            }, 100);
+        }
+
+        function saveCoordinates(lat, lon) {
+            localStorage.setItem('latitude', lat);
+            localStorage.setItem('longitude', lon);
+        }
+
+        function loadCoordinates() {
+            const lat = localStorage.getItem('latitude');
+            const lon = localStorage.getItem('longitude');
+            if (lat && lon) {
+                return { lat, lon };
+            }
+            return null;
+        }
+
+        function initFromStorage() {
+            const coords = loadCoordinates();
+            if (coords) {
+                latInput.value = coords.lat;
+                lonInput.value = coords.lon;
+                updateWidget(coords.lat, coords.lon);
+            }
+        }
+
+        saveBtn.addEventListener('click', () => {
+            const lat = latInput.value.trim();
+            const lon = lonInput.value.trim();
+
+            if (!lat || isNaN(lat) || lat < -90 || lat > 90) {
+                alert('Введите корректную широту от -90 до 90');
+                return;
+            }
+            if (!lon || isNaN(lon) || lon < -180 || lon > 180) {
+                alert('Введите корректную долготу от -180 до 180');
+                return;
+            }
+
+            saveCoordinates(lat, lon);
+            updateWidget(lat, lon);
+
+            setTimeout(() => {
+                location.reload(true); // true для жёсткого (принудительного) обновления, игнорирует кэш
+            }, 1000);
+
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initFromStorage();
+        });
+    </script>
+
+
+
+
+
+
+    <!-- <script async src="https://app3.weatherwidget.org/js/?id=ww_308ae36aa1ab8"></script> -->
+
+
+
     <div id="gradient2" class="back-img"></div>
     <footer class="back-img">
         <p class="footer">DE</p>
@@ -560,59 +633,70 @@
 
         if (month === 12) {
             //декабрь
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/winter-1.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/winter-1.jpg?raw=true');
         }
         else if (month === 1) {
             //январь
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/winter-2.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/winter-2.jpg?raw=true');
         }
         else if (month === 2) {
             //февраль
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/winter-3.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/winter-3.jpg?raw=true');
         }
         else if (month === 3) {
             //март
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/spring-1.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/spring-1.jpg?raw=true');
         }
         else if (month === 4) {
             //апрель
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/spring-2.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/spring-2.jpg?raw=true');
         }
         else if (month === 5) {
             //май
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/spring-3.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/spring-3.jpg?raw=true');
         }
         else if (month === 6) {
             //июнь
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/summer-1.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/summer-1.jpg?raw=true');
         }
         else if (month === 7) {
             //июль
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/summer-2.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/summer-2.jpg?raw=true');
         }
         else if (month === 8) {
             //август
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/summer-2.jpeg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/summer-3.jpg?raw=true');
         }
         else if (month === 9) {
             //сентябрь
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn-1.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/autumn-1.jpg?raw=true');
         }
         else if (month === 10) {
             //октябрь
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn-2.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/autumn-2.jpg?raw=true');
         }
         else if (month === 11) {
             //ноябрь
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn-3.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/img-seasons/autumn-3.jpg?raw=true');
         }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
         if ((day === 31 && month === 12) || (day <= 8 && month === 1)) {
             //новогодние праздники, с 31.12 по 08.01
-            addImage('left-top', 'https://github.com/diy-electron1cs/DE_calendar/blob/main/images/new-year.png?raw=true', '150px', '-80px', '0px');
+            addImage('left-top', 'https://github.com/diy-electron1cs/DE_calendar/blob/main/images/new-year.png?raw=true', '150px', '-110px', '-10px');
         }
         else if (day === 23 && month === 2) {
             //день защитника отечества, 23.02
