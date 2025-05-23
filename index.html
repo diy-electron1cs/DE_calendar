@@ -40,7 +40,7 @@
 
         #gradient2 {
             margin: 0px;
-            height: 300px;
+            height: 100px;
             background: linear-gradient(#484848, #1c1c1c);
         }
 
@@ -48,6 +48,8 @@
             color: #79a498;
             background-color: #1c1c1c;
             margin: 0px;
+            -webkit-text-stroke: 0.75px black;
+            font-weight: 900;
         }
 
         h1 {
@@ -58,7 +60,7 @@
         }
 
         footer {
-            height: 90px;
+            height: 10px;
             background-color: #1c1c1c;
         }
 
@@ -198,11 +200,13 @@
 
         .back-img {
             background-attachment: fixed;
+            background-size: cover;
         }
 
         #meteo {
+            display: flex;
+            justify-content: center;
             margin-top: 50px;
-            text-align: center;
         }
 
 
@@ -237,15 +241,22 @@
     </main>
 
     <div id="meteo">
-        <div id="ww_308ae36aa1ab8" v='1.3' loc='auto'
-            a='{"t":"horizontal","lang":"ru","ids":[],"font":"Arial","sl_ics":"one_a","sl_sot":"celsius","cl_bkg":"#FFFFFF00","cl_font":"#FFFFFF","cl_cloud":"#d4d4d4","cl_persp":"#2196F3","cl_sun":"#FFC107","cl_moon":"#FFC107","cl_thund":"#FF5722"}'>
-            Больше прогнозов: <a href="https://oneweather.org/tr/istanbul/15_days/" id="ww_308ae36aa1ab8_u"
-                target="_blank" style="display: none;">İstanbul 15 günlük hava durumu</a>
+        <!--
+        <div data-meteomatics-weather-widget="horizontal" data-meteomatics-weather-widget-color="primary"
+            data-meteomatics-weather-widget-title="Krasnodar"
+            data-meteomatics-weather-widget-latitude="47.420153" data-meteomatics-weather-widget-longitude="9.367273"
+            data-meteomatics-weather-widget-measurement-unit-temperature="celsius">
+            <a href="https://www.meteomatics.com">Meteomatics Weather Widget</a>
         </div>
+
+
+        <link rel="stylesheet" href="https://widget.meteomatics.com/v2/meteomatics-weather-widget.css" />
+        <script async src="https://widget.meteomatics.com/v2/meteomatics-weather-widget.js"></script>
+    -->
+
     </div>
 
     <script async src="https://app3.weatherwidget.org/js/?id=ww_308ae36aa1ab8"></script>
-
     <div id="gradient2" class="back-img"></div>
     <footer class="back-img">
         <p class="footer">DE</p>
@@ -498,6 +509,7 @@
         const month = today.getMonth() + 1;
 
 
+
         if (month === 12) {
             //декабрь
             setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/winter-1.jpg?raw=true');
@@ -508,7 +520,7 @@
         }
         else if (month === 2) {
             //февраль
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/winter-3.gpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/winter-3.jpg?raw=true');
         }
         else if (month === 3) {
             //март
@@ -532,7 +544,7 @@
         }
         else if (month === 8) {
             //август
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/summer-3.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/summer-2.jpeg?raw=true');
         }
         else if (month === 9) {
             //сентябрь
@@ -540,12 +552,14 @@
         }
         else if (month === 10) {
             //октябрь
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn-1.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn-2.jpg?raw=true');
         }
         else if (month === 11) {
             //ноябрь
-            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn-1.jpg?raw=true');
+            setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/autumn-3.jpg?raw=true');
         }
+
+
 
 
         if ((day === 31 && month === 12) || (day <= 8 && month === 1)) {
@@ -575,7 +589,7 @@
         else if (day === 9 && month === 5) {
             //день победы, 09.05
             //addImage('right-top', 'https://github.com/diy-electron1cs/DE_calendar/blob/main/images/9-may-2025.png?raw=true', '100px', '-80px', '-10px');
-            addImage('center-top', 'https://github.com/diy-electron1cs/DE_calendar/blob/main/images/9-may.png?raw=true', '170px', '-30px', '0px');
+            addImage('center-top', 'https://github.com/diy-electron1cs/DE_calendar/blob/main/images/9-may.png?raw=true', '170px', '-25px', '0px');
 
         }
         else if (day === 12 && month === 6) {
@@ -599,6 +613,8 @@
             //день программиста, 256 посчёту
             setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/matrix.png?raw=true');
         }
+
+
     </script>
 
 </body>
