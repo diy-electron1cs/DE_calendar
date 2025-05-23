@@ -215,6 +215,10 @@
             text-align: center;
             text-overflow: ellipsis;
         }
+
+        #weather-widget {
+            max-width: 320px;
+        }
     </style>
 </head>
 
@@ -253,6 +257,50 @@
         <link rel="stylesheet" href="https://widget.meteomatics.com/v2/meteomatics-weather-widget.css" />
         <script async src="https://widget.meteomatics.com/v2/meteomatics-weather-widget.js"></script>
     -->
+
+
+        <div id="weather-widget" data-meteomatics-weather-widget="horizontal"
+            data-meteomatics-weather-widget-color="primary" data-meteomatics-weather-widget-title="Your Location"
+            data-meteomatics-weather-widget-measurement-unit-temperature="celsius">
+            <a href="https://www.meteomatics.com">Meteomatics Weather Widget</a>
+        </div>
+
+        <link rel="stylesheet" href="https://widget.meteomatics.com/v2/meteomatics-weather-widget.css" />
+        <script async src="https://widget.meteomatics.com/v2/meteomatics-weather-widget.js"></script>
+
+        <script>
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function (position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+
+                    // Найдём див с виджетом
+                    const widget = document.getElementById('weather-widget');
+
+                    // Установим атрибуты широты и долготы
+                    widget.setAttribute('data-meteomatics-weather-widget-latitude', lat);
+                    widget.setAttribute('data-meteomatics-weather-widget-longitude', lon);
+
+
+                    widget.setAttribute('data-meteomatics-weather-widget-title', 'Weather');
+
+                    widget.innerHTML = '<a href="https://www.meteomatics.com">Meteomatics Weather Widget</a>';
+
+                    if (window.MeteomaticsWeatherWidget) {
+                        window.MeteomaticsWeatherWidget.init();
+                    }
+                }, function (error) {
+                    console.error('Ошибка определения геолокации', error);
+                });
+            } else {
+                console.log('Геолокация не поддерживается вашим браузером');
+            }
+        </script>
+
+
+
+
+
 
     </div>
 
