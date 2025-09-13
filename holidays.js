@@ -2,9 +2,11 @@ const today = new Date();
 const day = today.getDate();
 const month = today.getMonth() + 1;
 
-function isProgrammersDay(day, month) {
-    const programmersDate = new Date(year, 0, 256);
-    return day === programmersDate.getDate() && (month - 1) === programmersDate.getMonth();
+
+function isProgrammersDay(day, month) { 
+    const year = new Date().getFullYear(); // текущий год
+    const programmersDate = new Date(year, 0, 256); 
+    return day === programmersDate.getDate() && (month - 1) === programmersDate.getMonth(); 
 }
 
 if (month === 12) {
