@@ -103,7 +103,7 @@ else if (day === 4 && month === 11) {
     //день народного единства, 04.11
     addImage('center-top', 'https://github.com/diy-electron1cs/DE_calendar/blob/main/images/4-now.png?raw=true', '150px', '0px', '0px');
 }
-if (isProgrammersDay(day, month, year) === true) {
+else if (isProgrammersDay(day, month, year) === true) {
     //день программиста, 256 посчёту
     setResponsiveBackground('https://github.com/diy-electron1cs/DE_calendar/blob/main/images/matrix.png?raw=true');
 }
